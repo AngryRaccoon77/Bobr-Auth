@@ -7,6 +7,8 @@ import org.example.authservice.Service.KeycloakAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1")
 public class AuthController {
@@ -35,5 +37,16 @@ public class AuthController {
         TokenResponse tokenResponse = keycloakAuthService
                 .refreshToken(refreshRequest.getRefreshToken());
         return ResponseEntity.ok(tokenResponse);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String password = payload.get("password");
+
+        // Вызываем Keycloak + сохраняем в UserService
+        keycloakAuthService.registerUser(email, password);
+
+        return ResponseEntity.ok().build();
     }
 }

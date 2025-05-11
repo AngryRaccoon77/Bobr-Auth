@@ -45,11 +45,14 @@ public class KeycloakProperties {
     }
 
     public String getTokenEndpoint() {
-        // Формируем URL, по которому будем получать/обновлять токен
         return this.authServerUrl
                 + "/realms/"
                 + this.realm
                 + "/protocol/openid-connect/token";
+    }
+
+    public String getUserRegistrationEndpoint() {
+        return authServerUrl + "/admin/realms/" + realm + "/users";
     }
 }
 
